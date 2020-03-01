@@ -3,8 +3,8 @@
 // Public Domain.
 // For more information, see http://github.com/toolness/tiny-turtle.
 
-function TinyTurtle(canvas) {
-  canvas = canvas || document.querySelector('canvas');
+function TinyTurtle(id) {
+  var canvas = document.getElementById(id);
 
   var self = this;
   var rotation = 90;
@@ -27,8 +27,9 @@ function TinyTurtle(canvas) {
 
   self.penStyle = 'black';
   self.penWidth = 1;
-  self.penUp = function() { isPenDown = false; return self; };
-  self.penDown = function() { isPenDown = true; return self; };
+  self.clear = function () { canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); return self; }
+  self.penUp = function () { isPenDown = false; return self; };
+  self.penDown = function () { isPenDown = true; return self; };
   self.forward = self.fd = function(distance) {
     var origX = position.x, origY = position.y;
     position.x += Math.cos(radians(rotation)) * distance;
@@ -58,12 +59,16 @@ function TinyTurtle(canvas) {
   self.left = self.lt = function(deg) { rotate(deg); return self; };
   self.right = self.rt = function(deg) { rotate(-deg); return self; };
 
-  Object.defineProperties(self, {
-    canvas: {get: function() { return canvas; }},
-    rotation: {get: function() { return rotation; }},
-    position: {get: function() { return {x: position.x, y: position.y}; }},
-    pen: {get: function() { return isPenDown ? 'down' : 'up'; }}
-  });
+  try {
+    Object.defineProperties(self, {
+      canvas: {get: function() { return canvas; }},
+      rotation: {get: function() { return rotation; }},
+      position: {get: function() { return {x: position.x, y: position.y}; }},
+      pen: {get: function() { return isPenDown ? 'down' : 'up'; }}
+    });
+  } catch (e) {}
+
+  self.clear()
 
   return self;
 }
