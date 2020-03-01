@@ -12,7 +12,7 @@ narrator: US Male Female
 comment:  A template for importing tiny-turtle and using it for teaching
           JavaScript.
 
-script:   https://cdn.jsdelivr.net/gh/LiaTemplates/tiny-turtle/tiny-turtle.js
+script:   https://cdn.jsdelivr.net/gh/liaTemplates/tiny-turtle/tiny-turtle.js
 
 @TinyTurtle: @TinyTurtle.eval(@uid,@0,@1,@2)
 
